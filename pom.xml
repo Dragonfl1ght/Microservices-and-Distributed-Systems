@@ -4,11 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Added: Spring Boot parent POM to manage dependency versions automatically -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.7</version>
+        <version>2.7.18</version>  <!-- Java 17 compatible -->
         <relativePath/>
     </parent>
 
@@ -23,43 +22,48 @@
     <modules>
         <module>customer</module>
         <module>fraud</module>
+        <module>eureka-server</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Added: Explicit Lombok version to prevent "unknown" version error -->
-        <lombok.version>1.18.24</lombok.version>
-        <!-- Removed: spring.boot.maven.plugin.version and spring.boot.dependencies.version as they're now managed by parent -->
+        <lombok.version>1.18.30</lombok.version>
+        <spring.cloud-version>2021.0.8</spring.cloud-version>  <!-- Latest in 2021.x -->
     </properties>
 
-    <!-- Removed: dependencyManagement section as it's now handled by the parent POM -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <!-- Added: Version and scope for Lombok -->
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <!-- Added: Test scope as this is only needed for testing -->
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <!-- Changed: Removed pluginManagement as we want to actually use the plugin -->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <!-- Fixed: Removed trailing dash from artifactId -->
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- Removed: Version as it's managed by the parent POM -->
             </plugin>
         </plugins>
     </build>
