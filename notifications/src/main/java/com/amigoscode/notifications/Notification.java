@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
-@ToString
 public class Notification {
     @SequenceGenerator(
             name = "notification_id_sequence",
